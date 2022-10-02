@@ -236,7 +236,7 @@ pub fn draw(graphics: &mut Graphics, game: &mut Option<Lunarlander>, fonts_manag
 
             // Ship   
             if let Some(image) = &lander.image { 
-                graphics.draw(
+                graphics.draw_full(
                     image, 
                     lander.position.x, 
                     lander.position.y, 
@@ -253,7 +253,7 @@ pub fn draw(graphics: &mut Graphics, game: &mut Option<Lunarlander>, fonts_manag
             if let Some(engine) = &lander.engine {
                 if let EngineState::Activate = engine.state {
                     if let Some(image) = &engine.image { 
-                        graphics.draw(
+                        graphics.draw_full(
                             image, 
                             engine.position.x, 
                             engine.position.y, 
