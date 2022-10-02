@@ -7,15 +7,13 @@
     
     @Author : GCast31 / From formation GAMECODEUR.COM
 */
-use game2d::game::common::{Dimension, Angle, Velocity2d, Position, Point2d, GAME_FONT_DEFAULT_, GAME_FONT_DEFAULT_SIZE, Scale2d, Velocity, Force, Force2d, angle_add};
+use game2d::game::common::{Dimension, Angle, Velocity2d, Position, Point2d, GAME_FONT_DEFAULT_, GAME_FONT_DEFAULT_SIZE, Scale2d, Velocity, Force2d, angle_add};
 use game2d::game::game::*;
+use game2d::game::inputs::Inputs;
 use game2d::graphics::color::Color;
 use game2d::graphics::fonts::FontsManager;
 use game2d::graphics::graphics::Graphics;
-
 use game2d::graphics::images::Image;
-use game2d::inputs::keyboard::Keyboard;
-
 use game2d::inputs::keyboard::Keys;
 
 
@@ -166,18 +164,18 @@ pub fn load(graphics: &mut Graphics, game: &mut Option<Lunarlander>) {
 // #                                                   U P D A T E                                                #
 // ################################################################################################################ 
 #[allow(unused_variables)]
-pub fn update(graphics: &mut Graphics, game: &mut Option<Lunarlander>, keyboard: &mut Keyboard, dt: f32) {
+pub fn update(graphics: &mut Graphics, game: &mut Option<Lunarlander>, inputs: &mut Inputs, dt: f32) {
     if let Some(game) = game {
         // Draw lander
         if let Some(lander) = &mut game.lander {
             lander.velocity.y = lander.velocity.y + (GRAVITY * dt);
 
             // ****** SHIP
-            if keyboard.is_down(&Keys::Right) {
+            if inputs.keyboard.is_down(&Keys::Right) {
                 lander.angle = lander.angle + 90. as Angle * dt as Angle;
             }
 
-            if keyboard.is_down(&Keys::Left) {
+            if inputs.keyboard.is_down(&Keys::Left) {
                 lander.angle = lander.angle - 90. as Angle * dt as Angle;
             }
 
@@ -191,7 +189,7 @@ pub fn update(graphics: &mut Graphics, game: &mut Option<Lunarlander>, keyboard:
                 engine.position.y = lander.position.y - (5. * lander.scale.sy) ;
 
                 // Activate engine
-                if keyboard.is_down(&Keys::Up) {
+                if inputs.keyboard.is_down(&Keys::Up) {
                     engine.state = EngineState::Activate;
 
                     let force = Force2d::new(lander.angle, lander.speed);
@@ -226,7 +224,7 @@ pub fn keypressed(graphics: &mut Graphics, game: &mut Option<Lunarlander>, key: 
 // #                                                    D R A W                                                   #
 // ################################################################################################################ 
 #[allow(unused_variables)]
-pub fn draw(graphics: &mut Graphics, game: &mut Option<Lunarlander>, fonts_manager: &mut Option<FontsManager>) {
+pub fn draw(graphics: &mut Graphics, game: &mut Option<Lunarlander>, inputs: &mut Inputs, fonts_manager: &mut Option<FontsManager>) {
    
     graphics.set_color(Color::BLUE);
 
